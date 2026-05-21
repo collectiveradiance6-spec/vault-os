@@ -1,7 +1,1 @@
-export const settings = {
-
-  particles:true,
-  scanlines:true,
-  autoLock:true
-
-};
+export * from '../src/modules/settings.js';

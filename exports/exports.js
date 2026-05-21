@@ -1,15 +1,6 @@
-function exportVault(){
-
-  const blob = new Blob(
-    [JSON.stringify(vaultEntries,null,2)],
-    { type:"application/json" }
-  );
-
-  const a = document.createElement("a");
-
-  a.href = URL.createObjectURL(blob);
-
-  a.download = "vault_backup.json";
-
-  a.click();
-}
+/**
+ * @deprecated Global-script export helper. Prefer:
+ *   import { exportVaultBackup } from '@services/vault.js';
+ * Not imported by the Vite entry graph.
+ */
+export { exportVaultBackup as exportVault } from '../src/services/vault.js';

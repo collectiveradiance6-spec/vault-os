@@ -1,14 +1,1 @@
-const modal =
-  document.getElementById('modalOverlay');
-
-export function openModal(){
-
-  modal.classList.add('active');
-
-}
-
-export function closeModal(){
-
-  modal.classList.remove('active');
-
-}
+export * from '../src/ui/modal.js';

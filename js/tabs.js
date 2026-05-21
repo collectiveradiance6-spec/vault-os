@@ -1,18 +1,1 @@
-export function switchTab(tab){
-
-  document
-    .querySelectorAll('.tab')
-    .forEach(t => t.classList.remove('active'));
-
-  document
-    .getElementById(`tab${capitalize(tab)}`)
-    .classList.add('active');
-
-}
-
-function capitalize(v){
-
-  return v.charAt(0).toUpperCase()
-    + v.slice(1);
-
-}
+/** @deprecated Quarantined — see `legacy/js-original/tabs.js`. Not used by the boot graph. */

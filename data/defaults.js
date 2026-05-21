@@ -1,20 +1,6 @@
-window.DEFAULT_VAULT = [
-  {
-    id:1,
-    name:"GitHub",
-    category:"Development",
-    username:"",
-    password:"",
-    url:"",
-    notes:"",
-    tags:["dev"],
-    icon:"⚡",
-    status:"active"
-  }
-];
-
-window.DEFAULT_SETTINGS = {
-  mask:true,
-  particles:true,
-  scanlines:true
-};
+/** @deprecated Use `src/data/defaults.js` — kept for legacy script tags only. */
+export {
+  DEFAULT_ENTRIES as DEFAULT_VAULT,
+  DEFAULT_SETTINGS,
+  DEFAULT_STATE,
+} from '../src/data/defaults.js';

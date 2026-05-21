@@ -1,12 +1,2 @@
-function filterCards(){
-  const q = document
-    .getElementById("searchInput")
-    .value
-    .toLowerCase();
-
-  renderCards(
-    vaultEntries.filter(e =>
-      e.name.toLowerCase().includes(q)
-    )
-  );
-}
+/** @deprecated Use `src/ui/search.js` — not in the Vite entry graph. */
+export { filterCards } from '../src/ui/search.js';

@@ -1,6 +1,1 @@
-export const state = {
-  locked: true,
-  entries: [],
-  activeView: 'home',
-  theme: 'default'
-};
+export * from '../../src/core/state.js';

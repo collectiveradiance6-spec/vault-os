@@ -1,1 +1,6 @@
-import './js/core/boot.js'
+import '../css/base.css';
+import '../css/layout.css';
+import '../css/components.css';
+import '../css/animations.css';
+import '../css/mobile.css';
+import './core/boot.js';
