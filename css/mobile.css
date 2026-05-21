@@ -1,31 +1,46 @@
 html,
-body{
-  min-height:100dvh;
-  overflow-x:hidden;
+body {
+  height: 100%;
+  min-height: 100dvh;
+  margin: 0;
+  overflow-x: hidden;
+
+  /* prevents iOS bounce glitches */
+  overscroll-behavior: none;
+
+  /* improves touch handling */
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.credential-grid{
-  display:grid;
-  grid-template-columns:1fr;
-  gap:12px;
+/* safer than only grid rules */
+.credential-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
 }
 
-@media(min-width:720px){
-
-  .credential-grid{
-    grid-template-columns:
-      repeat(2,1fr);
+/* better breakpoint for modern phones + tablets */
+@media (min-width: 720px) {
+  .credential-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-
 }
 
+/* prevents iOS zoom-on-focus bug */
 input,
 textarea,
-button{
-  font-size:16px;
+button {
+  font-size: 16px;
+  line-height: 1.2;
 }
 
-.bottomDock{
-  padding-bottom:
-    env(safe-area-inset-bottom);
+/* better safe-area handling (dock + bottom UI systems) */
+.bottomDock {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* improves rendering stability on animated UI */
+* {
+  box-sizing: border-box;
 }

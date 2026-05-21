@@ -1,24 +1,26 @@
 import { loadVault } from './storage.js';
+import { setEntries } from './vault.js';
+import { filterCards } from './search.js';
+import { initUI } from './ui/ui.js';
+import { safeParticles } from './core/performance.js';
 
-import { setEntries }
-from './vault.js';
+safeParticles(initParticles);
 
-import { initParticles }
-from './particles.js';
-
-import { filterCards }
-from './search.js';
-
-window.filterCards = filterCards;
-
-boot();
-
-function boot(){
+export function initApp() {
+  console.log('[Vault OS] init');
 
   const data = loadVault();
-
   setEntries(data);
 
-  initParticles();
+  initUI();
 
+  // performance-safe loading
+  requestAnimationFrame(() => {
+  safeParticles(initParticles);
+    if (!/Mobi|Android/i.test(navigator.userAgent)) {
+      initParticles();
+    }
+  });
+
+  window.filterCards = filterCards;
 }
