@@ -1,0 +1,15 @@
+@keyframes drift{
+  0%{
+    transform:translate(-2%,-2%);
+  }
+
+  100%{
+    transform:translate(2%,3%);
+  }
+}
+
+@keyframes pulse{
+  50%{
+    opacity:.4;
+  }
+}

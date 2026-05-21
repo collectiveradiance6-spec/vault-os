@@ -1,0 +1,17 @@
+body{
+  margin:0;
+  background:#05060a;
+  color:white;
+  font-family:'Space Grotesk',sans-serif;
+}
+
+.home{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:12px;
+}
+
+.card{
+  border-radius:20px;
+  padding:14px;
+}
