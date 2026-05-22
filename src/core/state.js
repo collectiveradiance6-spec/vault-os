@@ -9,9 +9,14 @@ const _state = {
   entries: [],
   activityLog: [],
   settings: {
-    mask: true, particles: true, scanlines: true,
-    autoLock: true, clipboardClear: false,
+    mask: true,
+    particles: true,
+    scanlines: true,
+    autoLock: true,
+    clipboardClear: false,
   },
+  pinAttempts: 0,
+  pinInput: '',
 };
 
 const _listeners = new Map();
@@ -23,6 +28,9 @@ export function getState(key) {
 export function setState(patch) {
   Object.assign(_state, patch);
   _listeners.get('*')?.forEach(fn => fn(_state));
+  if (patch.settings) {
+    _listeners.get('settings')?.forEach(fn => fn(_state.settings));
+  }
 }
 
 export function setKey(key, value) {
