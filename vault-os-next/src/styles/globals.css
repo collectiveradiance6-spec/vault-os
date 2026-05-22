@@ -1,0 +1,26 @@
+:root {
+  color-scheme: dark;
+  --bg: #05030b;
+  --bg2: #130726;
+  --glass: rgba(128, 78, 190, 0.14);
+  --line: rgba(185, 128, 255, 0.5);
+  --text: #ece6ff;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: radial-gradient(circle at 15% 20%, var(--bg2), var(--bg)); color: var(--text); font-family: Inter, system-ui, sans-serif; }
+.screen { min-height: 100dvh; position: relative; overflow: hidden; padding: 2rem; }
+.ambient { position:absolute; inset:-20%; background:conic-gradient(from 90deg, transparent, rgba(124,55,255,.3), transparent); filter: blur(72px); animation: spin 18s linear infinite; }
+.glass-panel, .glass-card { position:relative; z-index:2; backdrop-filter: blur(14px); border:1px solid var(--line); background:var(--glass); border-radius:20px; box-shadow: 0 24px 50px rgba(40,10,90,.45); }
+.login-panel { max-width: 620px; padding: 2rem; margin: 18vh auto 0; }
+.eyebrow { letter-spacing: .12em; text-transform: uppercase; color:#c7b1ff; font-size:.8rem; }
+.muted { color:#c7b1ff; }
+.command-grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(240px,1fr)); gap:1rem; position:relative; z-index:2; margin-top:14vh; }
+.glass-card { padding:1rem; }
+.overshell { position:fixed; inset:0; pointer-events:none; z-index:5; }
+.overshell__entity { position:absolute; width:24px; height:24px; image-rendering: pixelated; background: linear-gradient(180deg,#f4ecff,#8f58ff); box-shadow: 0 0 24px rgba(158,99,255,.8); border-radius: 4px; animation: drift 8s ease-in-out infinite; left:10%; top:20%; }
+.overshell__rail { position:absolute; left:5%; right:5%; height:1px; background: linear-gradient(90deg, transparent, rgba(168,112,255,.9), transparent); }
+.overshell__rail--top { top:8%; }
+.overshell__rail--bottom { bottom:8%; }
+@keyframes drift { 0%,100% { transform: translate3d(0,0,0);} 50% { transform: translate3d(40vw,25vh,0);} }
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .ambient,.overshell__entity { animation:none; } }
