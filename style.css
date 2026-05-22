@@ -1,0 +1,16 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   src/style.css — Vault OS CSS entry point
+   Imports all partial sheets in dependency order.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@import '../css/tokens.css';
+@import '../css/base.css';
+@import '../css/animations.css';
+@import '../css/background.css';
+@import '../css/lockscreen.css';
+@import '../css/layout.css';
+@import '../css/cards.css';
+@import '../css/panels.css';
+@import '../css/tabs.css';

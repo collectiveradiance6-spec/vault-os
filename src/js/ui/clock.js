@@ -1,19 +1,16 @@
 // ─────────────────────────────────────────────────────────────────────────────
-// src/js/ui/search.js — live search bar
+// src/js/ui/clock.js — status bar live clock
 // ─────────────────────────────────────────────────────────────────────────────
 
-import { setState } from '../core/state.js';
-import { renderCards } from '../components/cards.js';
-import { debounce } from '../core/performance.js';
+export function mountClock() {
+  const el = document.getElementById('clock');
+  if (!el) return;
 
-export function mountSearch() {
-  const input = document.getElementById('searchInput');
-  if (!input) return;
-
-  const handleInput = debounce(() => {
-    setState({ searchQuery: input.value });
-    renderCards();
-  }, 180);
-
-  input.addEventListener('input', handleInput);
+  function tick() {
+    el.textContent = new Date().toLocaleTimeString([], {
+      hour: '2-digit', minute: '2-digit',
+    });
+  }
+  tick();
+  setInterval(tick, 1000);
 }

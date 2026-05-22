@@ -1,60 +1,12 @@
-:root {
-  /* Core palette */
-  --bg-void: #02030a;
-  --bg-base: #05060f;
-  --bg-surface: #0a0b18;
-  --bg-raised: #0f1022;
-  --bg-glass: rgba(255, 255, 255, 0.03);
-
-  /* Accent */
-  --accent: #7c3aed;
-  --accent-bright: #9d5cf6;
-  --accent-glow: rgba(124, 58, 237, 0.35);
-  --accent-dim: rgba(124, 58, 237, 0.12);
-
-  /* Text */
-  --text-primary: #e2e8f0;
-  --text-secondary: #64748b;
-  --text-muted: #334155;
-  --text-accent: #a78bfa;
-
-  /* State */
-  --danger: #ef4444;
-  --danger-dim: rgba(239, 68, 68, 0.12);
-  --success: #22c55e;
-  --warning: #f59e0b;
-
-  /* Borders */
-  --border: rgba(255, 255, 255, 0.06);
-  --border-accent: rgba(124, 58, 237, 0.4);
-
-  /* Spacing */
-  --radius: 8px;
-  --radius-lg: 14px;
-
-  /* Viewport height fix */
-  --vh: 1vh;
-}
-
-[data-theme="dim"] {
-  --bg-void: #0a0a12;
-  --bg-base: #0e0e1a;
-  --bg-surface: #141424;
-  --accent: #6d28d9;
-}
-
-[data-theme="abyss"] {
-  --bg-void: #000000;
-  --bg-base: #030303;
-  --bg-surface: #070707;
-  --accent: #5b21b6;
-  --text-primary: #c4b5fd;
-}
+/* ─────────────────────────────────────────────────────────────────────────────
+   css/base.css — Vault OS base / reset
+   ───────────────────────────────────────────────────────────────────────────── */
 
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  -webkit-tap-highlight-color: transparent;
 }
 
 html, body {
@@ -63,35 +15,26 @@ html, body {
   overflow: hidden;
   overscroll-behavior: none;
   touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
-}
-
-body {
-  background: var(--bg-void);
-  color: var(--text-primary);
-  font-family: 'Space Grotesk', 'Segoe UI', system-ui, sans-serif;
-  font-size: 14px;
-  line-height: 1.6;
+  font-family: var(--sans);
+  background: var(--bg1);
+  color: var(--text);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
-input, textarea, button, select {
-  font-family: inherit;
-  font-size: 14px;
-}
-
-button {
-  cursor: pointer;
-  border: none;
+button, input, textarea {
+  font-family: var(--sans);
+  font-size: 16px; /* prevents iOS zoom */
+  color: inherit;
   background: none;
+  border: none;
+  cursor: pointer;
+  outline: none;
 }
 
-a {
-  color: var(--text-accent);
-  text-decoration: none;
-}
+a { color: inherit; text-decoration: none; }
 
-.hidden {
-  display: none !important;
-}
+/* scrollbar hide */
+* { scrollbar-width: none; }
+*::-webkit-scrollbar { display: none; }

@@ -1,19 +1,20 @@
 // ─────────────────────────────────────────────────────────────────────────────
-// src/js/ui/search.js — live search bar
+// src/js/core/boot.js — Vault OS entry point
 // ─────────────────────────────────────────────────────────────────────────────
 
-import { setState } from '../core/state.js';
-import { renderCards } from '../components/cards.js';
-import { debounce } from '../core/performance.js';
+import { initApp } from '../app.js';
 
-export function mountSearch() {
-  const input = document.getElementById('searchInput');
-  if (!input) return;
-
-  const handleInput = debounce(() => {
-    setState({ searchQuery: input.value });
-    renderCards();
-  }, 180);
-
-  input.addEventListener('input', handleInput);
+function setVH() {
+  document.documentElement.style.setProperty(
+    '--vh', `${window.innerHeight * 0.01}px`
+  );
 }
+
+function boot() {
+  setVH();
+  window.addEventListener('resize',            setVH);
+  window.addEventListener('orientationchange', setVH);
+  requestAnimationFrame(initApp);
+}
+
+document.addEventListener('DOMContentLoaded', boot);

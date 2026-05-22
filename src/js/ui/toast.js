@@ -1,19 +1,17 @@
 // ─────────────────────────────────────────────────────────────────────────────
-// src/js/ui/search.js — live search bar
+// src/js/ui/toast.js — ephemeral toast notifications
 // ─────────────────────────────────────────────────────────────────────────────
 
-import { setState } from '../core/state.js';
-import { renderCards } from '../components/cards.js';
-import { debounce } from '../core/performance.js';
+let toastEl, hideTimer;
 
-export function mountSearch() {
-  const input = document.getElementById('searchInput');
-  if (!input) return;
+export function mountToast() {
+  toastEl = document.getElementById('toast');
+}
 
-  const handleInput = debounce(() => {
-    setState({ searchQuery: input.value });
-    renderCards();
-  }, 180);
-
-  input.addEventListener('input', handleInput);
+export function showToast(msg, duration = 2200) {
+  if (!toastEl) return;
+  clearTimeout(hideTimer);
+  toastEl.textContent = msg;
+  toastEl.classList.add('show');
+  hideTimer = setTimeout(() => toastEl.classList.remove('show'), duration);
 }

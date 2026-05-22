@@ -1,173 +1,118 @@
-#bgCanvas {
+/* ─────────────────────────────────────────────────────────────────────────────
+   css/layout.css — Vault OS chrome layout
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* ── Status bar ──────────────────────────────────────────────────────────── */
+.statusbar {
   position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
+  top: 0; left: 0; right: 0;
+  height: 38px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 16px;
+  font-size: 11px;
+  color: var(--muted);
+  background: rgba(4,5,12,.65);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--stroke);
+  z-index: 500;
 }
+.status-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  font-size: 11.5px;
+  color: var(--muted2);
+}
+.status-right { display: flex; align-items: center; gap: 8px; }
+.status-pill {
+  padding: 2px 8px;
+  border-radius: 100px;
+  background: rgba(61,255,160,.1);
+  border: 1px solid rgba(61,255,160,.2);
+  color: var(--success);
+  font-size: 10px; font-weight: 600; letter-spacing: .04em;
+}
+#clock { font-weight: 500; font-family: var(--mono); font-size: 11px; }
 
-#app {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  height: calc(var(--vh, 1vh) * 100);
+/* ── App shell ───────────────────────────────────────────────────────────── */
+.app {
+  height: 100dvh;
   display: flex;
   flex-direction: column;
-}
-
-#vault-shell {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+  padding-top: 38px;
+  padding-bottom: 64px;
   overflow: hidden;
 }
 
-/* TOPBAR */
-#topbar {
+/* ── Header ──────────────────────────────────────────────────────────────── */
+.header {
+  padding: 14px 16px 8px;
   display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 0 20px;
-  height: 44px;
-  background: rgba(5, 6, 15, 0.85);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border);
+  justify-content: space-between;
+  align-items: flex-end;
   flex-shrink: 0;
-  z-index: 100;
 }
+.header-left h1 { font-size: 20px; font-weight: 700; letter-spacing: -.02em; }
+.header-left p  { font-size: 11px; color: var(--muted); margin-top: 3px; }
+.header-right   { display: flex; gap: 8px; }
 
-.topbar-brand {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.25em;
-  color: var(--text-accent);
+.icon-btn {
+  width: 32px; height: 32px;
+  border-radius: 10px;
+  background: var(--glass);
+  border: 1px solid var(--stroke);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px;
+  transition: all .2s ease;
 }
+.icon-btn:hover { background: var(--glass2); border-color: var(--stroke2); }
 
-#topbar-user {
-  margin-left: auto;
-  font-size: 11px;
-  color: var(--text-secondary);
-  letter-spacing: 0.1em;
+/* ── Bottom dock ─────────────────────────────────────────────────────────── */
+.bottomDock {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: 64px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background: rgba(4,5,12,.82);
+  backdrop-filter: blur(24px);
+  border-top: 1px solid var(--stroke);
+  z-index: 500;
+  padding: 0 8px;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
 }
-
-.topbar-btn {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  color: var(--text-secondary);
-  padding: 4px 10px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  transition: color 0.2s, border-color 0.2s;
+.dock-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  font-size: 9.5px; font-weight: 600;
+  letter-spacing: .04em; text-transform: uppercase;
+  color: var(--muted);
+  transition: all .2s ease;
+  padding: 6px 0;
+  border-radius: 12px;
 }
+.dock-btn.active  { color: var(--accent1); }
+.dock-btn:active  { transform: scale(.88); }
+.dock-icon { font-size: 20px; margin-bottom: 1px; }
 
-.topbar-btn:hover {
-  color: var(--danger);
-  border-color: var(--danger);
+/* ── Tab containers ──────────────────────────────────────────────────────── */
+#tabCreds {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
-
-/* VIEWPORT */
-#viewport {
+#tabVault,
+#tabSettings {
   flex: 1;
   overflow-y: auto;
-  overflow-x: hidden;
-  padding: 24px;
-  scrollbar-width: thin;
-  scrollbar-color: var(--accent-dim) transparent;
-}
-
-#viewport::-webkit-scrollbar {
-  width: 4px;
-}
-#viewport::-webkit-scrollbar-thumb {
-  background: var(--accent-dim);
-  border-radius: 2px;
-}
-
-/* DOCK */
-#dock-container {
-  flex-shrink: 0;
-  padding-bottom: env(safe-area-inset-bottom);
-}
-
-#dock {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  padding: 10px 20px;
-  background: rgba(5, 6, 15, 0.9);
-  backdrop-filter: blur(16px);
-  border-top: 1px solid var(--border);
-}
-
-.dock-btn {
-  width: 44px;
-  height: 44px;
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  background: var(--bg-glass);
-  color: var(--text-secondary);
-  font-size: 18px;
-  transition: all 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.dock-btn:hover {
-  background: var(--accent-dim);
-  border-color: var(--border-accent);
-  color: var(--text-accent);
-}
-
-.dock-btn.active {
-  background: var(--accent-dim);
-  border-color: var(--border-accent);
-  color: var(--accent-bright);
-  box-shadow: 0 0 12px var(--accent-glow);
-}
-
-/* MODAL */
-#modal-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 999;
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(4px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-}
-
-.modal {
-  background: var(--bg-raised);
-  border: 1px solid var(--border-accent);
-  border-radius: var(--radius-lg);
-  padding: 28px;
-  width: 100%;
-  max-width: 440px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  box-shadow: 0 0 40px var(--accent-glow);
-}
-
-.modal-body {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  color: var(--text-primary);
-}
-
-.modal-body h3 {
-  font-size: 12px;
-  letter-spacing: 0.2em;
-  color: var(--text-accent);
-  font-weight: 700;
-}
-
-.modal-actions {
-  display: flex;
-  gap: 10px;
-  justify-content: flex-end;
+  padding: 8px 16px 16px;
 }

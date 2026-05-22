@@ -1,0 +1,118 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   css/tabs.css — Vault overview + Settings tab content styles
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* ── Vault tab ────────────────────────────────────────────────────────────── */
+.vault-header {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 14px; margin-bottom: 14px;
+  background: rgba(124,92,255,.1);
+  border: 1px solid rgba(124,92,255,.2);
+  border-radius: 16px;
+}
+.vault-header-icon  { font-size: 24px; }
+.vault-header-text  { font-size: 13px; font-weight: 500; color: #c4b4ff; }
+.vault-header-text span {
+  display: block; font-size: 10.5px; color: var(--muted); font-weight: 400; margin-top: 2px;
+}
+
+.vault-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.vault-stat {
+  background: rgba(255,255,255,.04);
+  border: 1px solid var(--stroke);
+  border-radius: 14px;
+  padding: 12px 8px;
+  text-align: center;
+}
+.vault-stat-num   { font-size: 22px; font-weight: 700; letter-spacing: -.02em; }
+.vault-stat-label { font-size: 9.5px; color: var(--muted); margin-top: 2px; letter-spacing: .04em; }
+
+/* activity log */
+.log-entry {
+  display: flex; gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,.04);
+}
+.log-entry:last-child { border-bottom: none; }
+.log-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%; flex-shrink: 0; margin-top: 5px;
+}
+.log-dot.ok   { background: var(--success); }
+.log-dot.warn { background: var(--warn); }
+.log-dot.err  { background: var(--danger); }
+.log-text { font-size: 11.5px; color: var(--muted2); line-height: 1.5; }
+.log-time { font-size: 10px; color: var(--muted); font-family: var(--mono); margin-top: 2px; }
+.log-empty { font-size: 12px; color: var(--muted); padding: 10px 0; }
+
+/* ── Settings tab ─────────────────────────────────────────────────────────── */
+.settings-section { margin-bottom: 18px; }
+.settings-title {
+  font-size: 10px; font-weight: 600;
+  color: var(--muted); letter-spacing: .08em; text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.setting-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 12px;
+  background: rgba(255,255,255,.04);
+  border-radius: 12px; margin-bottom: 6px;
+  border: 1px solid var(--stroke);
+}
+.setting-row.clickable { cursor: pointer; transition: background .2s; }
+.setting-row.clickable:hover { background: rgba(255,255,255,.07); }
+.setting-info { flex: 1; }
+.setting-name { font-size: 13px; font-weight: 500; }
+.setting-desc { font-size: 10px; color: var(--muted); margin-top: 2px; }
+.danger-text  { color: var(--danger) !important; }
+.setting-arrow { font-size: 16px; opacity: .5; }
+
+/* toggle switch */
+.toggle {
+  width: 38px; height: 22px;
+  border-radius: 100px;
+  background: rgba(255,255,255,.12);
+  position: relative; cursor: pointer;
+  transition: background .2s; flex-shrink: 0; border: none;
+}
+.toggle.on { background: linear-gradient(90deg, var(--accent1), var(--accent2)); }
+.toggle::after {
+  content: '';
+  position: absolute; top: 3px; left: 3px;
+  width: 16px; height: 16px;
+  border-radius: 50%; background: #fff;
+  transition: transform .2s cubic-bezier(.34,1.56,.64,1);
+  box-shadow: 0 1px 4px rgba(0,0,0,.4);
+}
+.toggle.on::after { transform: translateX(16px); }
+
+.settings-footer {
+  text-align: center;
+  font-size: 10px; color: var(--muted);
+  padding: 10px 0 20px;
+  font-family: var(--mono);
+}
+
+/* ── Toast ────────────────────────────────────────────────────────────────── */
+.copied-toast {
+  position: fixed;
+  bottom: 76px; left: 50%;
+  transform: translateX(-50%) translateY(12px);
+  background: rgba(61,255,160,.15);
+  border: 1px solid rgba(61,255,160,.3);
+  color: var(--success);
+  font-size: 12px; font-weight: 600;
+  padding: 8px 18px; border-radius: 100px;
+  opacity: 0; pointer-events: none;
+  transition: all .25s ease;
+  z-index: 9000; white-space: nowrap;
+}
+.copied-toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
