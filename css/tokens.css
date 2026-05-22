@@ -1,35 +1,26 @@
-/* ─────────────────────────────────────────────────────────────────────────────
-   css/tokens.css — Vault OS design tokens
-   ───────────────────────────────────────────────────────────────────────────── */
-
 :root {
-  /* palette */
   --bg1:     #04050c;
-  --bg2:     #080d1e;
-  --glass:   rgba(255,255,255,0.055);
-  --glass2:  rgba(255,255,255,0.09);
-  --stroke:  rgba(255,255,255,0.09);
-  --stroke2: rgba(255,255,255,0.17);
+  --glass:   rgba(255,255,255,.055);
+  --glass2:  rgba(255,255,255,.09);
+  --stroke:  rgba(255,255,255,.09);
+  --stroke2: rgba(255,255,255,.17);
   --text:    #eaf0ff;
   --muted:   #7a8499;
   --muted2:  #a8b2c4;
 
-  /* accents */
   --accent1: #7c5cff;
   --accent2: #ff6fae;
   --accent3: #4df0c8;
   --accent4: #ffa855;
 
-  /* semantic */
   --danger:  #ff4f6a;
   --success: #3dffa0;
   --warn:    #ffbe3d;
 
-  /* typography */
   --sans: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
   --mono: 'JetBrains Mono', ui-monospace, monospace;
 
-  /* reactive bg offsets (set by fluid-bg.js) */
+  /* reactive fluid bg (set by fluid-bg.js) */
   --px: 0px;
   --py: 0px;
 

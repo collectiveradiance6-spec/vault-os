@@ -1,17 +1,8 @@
-// ─────────────────────────────────────────────────────────────────────────────
-// src/js/ui/toast.js — ephemeral toast notifications
-// ─────────────────────────────────────────────────────────────────────────────
-
-let toastEl, hideTimer;
-
-export function mountToast() {
-  toastEl = document.getElementById('toast');
-}
-
-export function showToast(msg, duration = 2200) {
-  if (!toastEl) return;
-  clearTimeout(hideTimer);
-  toastEl.textContent = msg;
-  toastEl.classList.add('show');
-  hideTimer = setTimeout(() => toastEl.classList.remove('show'), duration);
+let timer;
+export function showToast(msg) {
+  const t = document.getElementById('toast');
+  if (!t) return;
+  clearTimeout(timer);
+  t.textContent = msg; t.classList.add('show');
+  timer = setTimeout(() => t.classList.remove('show'), 2200);
 }

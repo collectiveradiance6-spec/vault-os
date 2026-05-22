@@ -1,137 +1,67 @@
-/* ─────────────────────────────────────────────────────────────────────────────
-   css/lockscreen.css
-   ───────────────────────────────────────────────────────────────────────────── */
-
+/* ── Auth lockscreen (Discord OAuth) ── */
 #lockScreen {
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: radial-gradient(circle at 50% 40%, rgba(124,92,255,.2), rgba(0,0,0,.95));
+  position: fixed; inset: 0; z-index: 9999;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  background: radial-gradient(circle at 50% 40%, rgba(124,92,255,.2), rgba(0,0,0,.96));
   transition: opacity .6s ease, transform .6s ease;
 }
 #lockScreen.fade-out {
-  opacity: 0;
-  transform: scale(1.04);
-  pointer-events: none;
+  opacity: 0; transform: scale(1.04); pointer-events: none;
 }
 
 .lock-logo {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: .25em;
-  color: var(--muted);
-  text-transform: uppercase;
-  margin-bottom: 28px;
+  font-size: 11px; font-weight: 600; letter-spacing: .25em;
+  color: var(--muted); text-transform: uppercase; margin-bottom: 28px;
 }
 
 .lock-box {
-  width: 320px;
-  padding: 24px 20px 20px;
+  width: 320px; padding: 28px 24px;
   border-radius: 28px;
   background: rgba(10,12,28,.78);
   border: 1px solid var(--stroke2);
   backdrop-filter: blur(40px);
   box-shadow: 0 0 100px rgba(124,92,255,.22), 0 30px 80px rgba(0,0,0,.6);
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  animation: fadeUp .4s ease both;
 }
 
-.lock-time {
-  text-align: center;
-  font-size: 48px;
-  font-weight: 300;
-  letter-spacing: -.02em;
-  line-height: 1;
-  margin-bottom: 4px;
-  background: linear-gradient(135deg, #fff, rgba(255,255,255,.5));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.lock-date {
-  text-align: center;
-  font-size: 12px;
-  color: var(--muted);
-  margin-bottom: 22px;
-  letter-spacing: .04em;
+.lock-glyph {
+  font-size: 44px; line-height: 1;
+  margin-bottom: 12px;
+  filter: drop-shadow(0 0 16px rgba(124,92,255,.6));
+  animation: pulse 3s ease-in-out infinite;
 }
 
-/* dots */
-.dots {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 18px;
-}
-.dot {
-  width: 11px; height: 11px;
-  border-radius: 50%;
-  border: 1.5px solid rgba(255,255,255,.22);
-  transition: all .18s ease;
-}
-.dot.filled {
-  background: linear-gradient(135deg, var(--accent2), var(--accent1));
-  border-color: transparent;
-  box-shadow: 0 0 10px rgba(124,92,255,.6);
-  transform: scale(1.15);
-}
-.dot.error {
-  background: var(--danger);
-  border-color: transparent;
-  animation: shake .3s ease;
+.lock-title {
+  font-size: 18px; font-weight: 700; letter-spacing: .3em;
+  color: var(--text); margin-bottom: 4px;
 }
 
-/* keypad */
-.keypad {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
+.lock-sub {
+  font-size: 9px; letter-spacing: .18em;
+  color: var(--muted); text-align: center; margin-bottom: 20px;
 }
-.key {
-  padding: 15px 10px;
+
+/* Discord auth button */
+.discord-btn {
+  display: flex; align-items: center; gap: 10px; justify-content: center;
+  width: 100%; padding: 13px 20px;
   border-radius: 14px;
-  background: rgba(255,255,255,.045);
-  border: 1px solid rgba(255,255,255,.08);
-  color: #fff;
-  font-size: 17px;
-  font-weight: 500;
-  text-align: center;
-  transition: all .12s ease;
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
+  background: #5865F2;
+  border: none; color: #fff;
+  font-size: 12px; font-weight: 700; letter-spacing: .12em;
+  transition: background .2s, box-shadow .2s, transform .12s;
+  box-shadow: 0 4px 24px rgba(88,101,242,.35);
 }
-.key::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 14px;
-  background: radial-gradient(circle at var(--rx,50%) var(--ry,50%),
-    rgba(255,255,255,.18), transparent 60%);
-  opacity: 0;
-  transition: opacity .2s;
+.discord-btn:hover {
+  background: #4752c4;
+  box-shadow: 0 6px 32px rgba(88,101,242,.55);
+  transform: translateY(-1px);
 }
-.key:hover  { background: rgba(255,255,255,.08); transform: translateY(-1px); }
-.key:active { transform: scale(.93); }
-.key:active::after { opacity: 1; }
-.key.action { color: var(--muted2); font-size: 14px; }
-.key.enter-btn {
-  grid-column: span 3;
-  background: linear-gradient(135deg, var(--accent2), var(--accent1));
-  border-color: transparent;
-  font-size: 13px; font-weight: 600;
-  letter-spacing: .06em; text-transform: uppercase;
-  box-shadow: 0 4px 24px rgba(124,92,255,.4);
-}
-.key.enter-btn:hover { box-shadow: 0 6px 32px rgba(124,92,255,.6); transform: translateY(-2px); }
+.discord-btn:active { transform: scale(.96); }
 
-.lock-hint {
-  text-align: center;
-  font-size: 11px;
-  color: var(--muted);
-  margin-top: 12px;
-  letter-spacing: .04em;
-  min-height: 16px;
+.lock-fine {
+  font-size: 10px; color: var(--muted);
+  letter-spacing: .08em; text-align: center; margin-top: 12px;
 }

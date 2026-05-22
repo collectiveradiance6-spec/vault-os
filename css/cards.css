@@ -1,85 +1,54 @@
-/* ─────────────────────────────────────────────────────────────────────────────
-   css/cards.css — Vault OS credential cards
-   ───────────────────────────────────────────────────────────────────────────── */
-
-/* search bar */
+/* ── Search ── */
 .searchbar {
   margin: 0 16px 8px;
-  background: var(--glass);
-  border: 1px solid var(--stroke);
-  border-radius: 14px;
-  padding: 8px 14px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  transition: border-color .2s;
-  flex-shrink: 0;
+  background: var(--glass); border: 1px solid var(--stroke);
+  border-radius: 14px; padding: 8px 14px;
+  display: flex; align-items: center; gap: 8px;
+  transition: border-color .2s; flex-shrink: 0;
 }
 .searchbar:focus-within { border-color: var(--stroke2); background: var(--glass2); }
 .searchbar svg   { opacity: .4; flex-shrink: 0; }
 .searchbar input { flex: 1; font-size: 13px; background: none; }
 .searchbar input::placeholder { color: var(--muted); }
 
-/* filter chips */
+/* ── Filter chips ── */
 .filter-row {
-  display: flex;
-  gap: 6px;
-  padding: 0 16px 8px;
-  overflow-x: auto;
-  flex-shrink: 0;
+  display: flex; gap: 6px;
+  padding: 0 16px 8px; overflow-x: auto; flex-shrink: 0;
 }
 .filter-chip {
-  flex-shrink: 0;
-  padding: 5px 12px;
-  border-radius: 100px;
-  background: var(--glass);
-  border: 1px solid var(--stroke);
-  font-size: 11px; font-weight: 500;
-  color: var(--muted2);
-  transition: all .2s ease;
-  cursor: pointer;
+  flex-shrink: 0; padding: 5px 12px; border-radius: 100px;
+  background: var(--glass); border: 1px solid var(--stroke);
+  font-size: 11px; font-weight: 500; color: var(--muted2);
+  transition: all .2s ease; cursor: pointer;
 }
 .filter-chip.active {
   background: rgba(124,92,255,.18);
-  border-color: rgba(124,92,255,.45);
-  color: #c4b4ff;
+  border-color: rgba(124,92,255,.45); color: #c4b4ff;
 }
 
-/* card grid */
+/* ── Grid ── */
 .home {
-  flex: 1;
-  overflow-y: auto;
-  overflow-x: hidden;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-  padding: 4px 16px 8px;
-  align-content: start;
+  flex: 1; overflow-y: auto; overflow-x: hidden;
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 10px; padding: 4px 16px 8px; align-content: start;
 }
 
-/* card */
+/* ── Card ── */
 .card {
-  background: var(--glass);
-  border: 1px solid var(--stroke);
-  border-radius: 20px;
-  padding: 14px;
-  backdrop-filter: blur(24px);
-  cursor: pointer;
+  background: var(--glass); border: 1px solid var(--stroke);
+  border-radius: 20px; padding: 14px;
+  backdrop-filter: blur(24px); cursor: pointer;
   transition: all .25s cubic-bezier(.34,1.56,.64,1);
-  position: relative;
-  overflow: hidden;
+  position: relative; overflow: hidden;
   animation: cardIn .4s ease both;
 }
 .card::before {
   content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 20px;
+  position: absolute; inset: 0; border-radius: 20px;
   background: radial-gradient(circle at var(--cx,50%) var(--cy,50%),
     rgba(255,255,255,.06), transparent 60%);
-  opacity: 0;
-  transition: opacity .3s;
-  pointer-events: none;
+  opacity: 0; transition: opacity .3s; pointer-events: none;
 }
 .card:hover::before { opacity: 1; }
 .card:hover {
@@ -90,20 +59,13 @@
 .card:active { transform: scale(.97); }
 .card.pinned::after {
   content: '📌';
-  position: absolute;
-  top: 10px; right: 10px;
+  position: absolute; top: 10px; right: 10px;
   font-size: 10px; opacity: .5;
 }
 
-.card-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 8px;
-}
+.card-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
 .card-icon-wrap {
-  width: 36px; height: 36px;
-  border-radius: 11px;
+  width: 36px; height: 36px; border-radius: 11px;
   display: flex; align-items: center; justify-content: center;
   font-size: 17px; flex-shrink: 0;
   background: rgba(255,255,255,.06);
@@ -114,81 +76,56 @@
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .card-category { font-size: 10px; color: var(--muted); margin-top: 1px; letter-spacing: .03em; }
-
-.card-divider { height: 1px; background: var(--stroke); margin: 8px 0; }
-
-.card-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.card-time { font-size: 10px; color: var(--muted); font-family: var(--mono); }
+.card-divider  { height: 1px; background: var(--stroke); margin: 8px 0; }
+.card-footer   { display: flex; align-items: center; justify-content: space-between; }
+.card-time     { font-size: 10px; color: var(--muted); font-family: var(--mono); }
 
 /* status badge */
 .status-badge {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  padding: 3px 8px;
-  border-radius: 100px;
+  display: flex; align-items: center; gap: 4px;
+  padding: 3px 8px; border-radius: 100px;
   font-size: 10px; font-weight: 600;
 }
-.status-badge.active  { background: rgba(61,255,160,.1);  border: 1px solid rgba(61,255,160,.2);  color: var(--success); }
-.status-badge.inactive{ background: rgba(255,79,106,.1);  border: 1px solid rgba(255,79,106,.2);  color: var(--danger); }
-.status-badge.pending { background: rgba(255,190,61,.1);  border: 1px solid rgba(255,190,61,.2);  color: var(--warn); }
+.status-badge.active   { background: rgba(61,255,160,.1);  border: 1px solid rgba(61,255,160,.2);  color: var(--success); }
+.status-badge.inactive { background: rgba(255,79,106,.1);  border: 1px solid rgba(255,79,106,.2);  color: var(--danger); }
+.status-badge.pending  { background: rgba(255,190,61,.1);  border: 1px solid rgba(255,190,61,.2);  color: var(--warn); }
 .status-dot {
-  width: 5px; height: 5px;
-  border-radius: 50%;
-  background: currentColor;
-  animation: pulse 2s ease infinite;
+  width: 5px; height: 5px; border-radius: 50%;
+  background: currentColor; animation: pulse 2s ease infinite;
 }
 
 /* tags */
 .card-tags { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 8px; }
 .tag {
-  padding: 2px 7px;
-  border-radius: 6px;
+  padding: 2px 7px; border-radius: 6px;
   font-size: 9.5px; font-weight: 600; letter-spacing: .03em;
-  background: rgba(124,92,255,.12);
-  color: #c4b4ff;
+  background: rgba(124,92,255,.12); color: #c4b4ff;
 }
 
-/* inline actions */
+/* card actions */
 .card-actions { display: flex; gap: 6px; margin-top: 10px; }
 .card-action-btn {
-  flex: 1;
-  padding: 6px;
-  border-radius: 10px;
+  flex: 1; padding: 6px; border-radius: 10px;
   font-size: 11px; font-weight: 600;
-  background: rgba(255,255,255,.06);
-  border: 1px solid var(--stroke);
-  transition: all .15s ease;
-  letter-spacing: .02em;
+  background: rgba(255,255,255,.06); border: 1px solid var(--stroke);
+  transition: all .15s ease; letter-spacing: .02em;
 }
 .card-action-btn:hover { background: rgba(255,255,255,.12); }
 .card-action-btn.primary {
   background: rgba(124,92,255,.18);
-  border-color: rgba(124,92,255,.35);
-  color: #c4b4ff;
+  border-color: rgba(124,92,255,.35); color: #c4b4ff;
 }
 
 /* empty state */
-.empty {
-  text-align: center;
-  padding: 40px 20px;
-  color: var(--muted);
-  grid-column: span 2;
-}
+.empty { text-align: center; padding: 40px 20px; color: var(--muted); grid-column: span 2; }
 .empty-icon { font-size: 32px; margin-bottom: 10px; opacity: .5; }
 .empty-text { font-size: 13px; }
 
 /* long-press ring */
 .lp-ring {
-  position: fixed;
-  border-radius: 50%;
+  position: fixed; border-radius: 50%;
   border: 2px solid rgba(124,92,255,.6);
-  animation: lp-grow .6s ease forwards;
+  animation: lpGrow .6s ease forwards;
   pointer-events: none;
-  transform: translate(-50%,-50%);
-  z-index: 9998;
+  transform: translate(-50%,-50%); z-index: 9998;
 }
