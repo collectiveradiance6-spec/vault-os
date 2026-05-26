@@ -1,0 +1,41 @@
+# Vault OS — Cloudflare Worker
+# ────────────────────────────────────────────────────────────────────────────
+# SETUP (one-time):
+#
+#   1. Install wrangler:
+#        npm install -g wrangler
+#        wrangler login
+#
+#   2. Create D1 database:
+#        npx wrangler d1 create vault-os-db
+#      Copy the database_id below.
+#
+#   3. Run the schema:
+#        npx wrangler d1 execute vault-os-db --file=worker/schema.sql --remote
+#
+#   4. Set secrets (never commit these):
+#        wrangler secret put DISCORD_CLIENT_ID
+#        wrangler secret put DISCORD_CLIENT_SECRET
+#        wrangler secret put JWT_SECRET
+#        wrangler secret put FRONTEND_URL        # e.g. https://your-site.pages.dev
+#        wrangler secret put DISCORD_REDIRECT_URI # e.g. https://vault-os-api.ACCOUNT.workers.dev/auth/discord/callback
+#        wrangler secret put ADMIN_DISCORD_IDS   # comma-separated Discord user IDs
+#
+#   5. Deploy:
+#        npx wrangler deploy
+#
+#   6. In Cloudflare Pages → your site → Settings → Environment variables:
+#        VITE_API_URL = https://vault-os-api.ACCOUNT.workers.dev
+#
+#   7. In Discord Developer Portal → your app → OAuth2:
+#        Add redirect: https://vault-os-api.ACCOUNT.workers.dev/auth/discord/callback
+# ────────────────────────────────────────────────────────────────────────────
+
+name              = "vault-os-api"
+main              = "worker/index.js"
+compatibility_date = "2025-01-01"
+
+[[d1_databases]]
+binding       = "DB"
+database_name = "vault-os-db"
+database_id   = "REPLACE_WITH_YOUR_D1_DATABASE_ID"

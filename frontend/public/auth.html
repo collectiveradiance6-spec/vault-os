@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="theme-color" content="#02030a"/>
+  <title>VAULT OS — Authenticating</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&display=swap" rel="stylesheet"/>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{
+      background:#02030a;color:#eaf0ff;
+      font-family:'Space Grotesk',sans-serif;
+      display:flex;align-items:center;justify-content:center;
+      min-height:100dvh;
+    }
+    .auth-box{text-align:center;display:flex;flex-direction:column;align-items:center;gap:18px}
+    .glyph{font-size:52px;color:#7c3aed;animation:pulse 1.5s ease-in-out infinite;
+      filter:drop-shadow(0 0 14px rgba(124,58,237,.4))}
+    .label{font-size:11px;letter-spacing:.3em;color:#7a8499}
+    .error{color:#ff4f6a;font-size:12px;letter-spacing:.15em;margin-top:4px;display:none}
+    .retry{
+      margin-top:8px;padding:10px 22px;border-radius:10px;
+      background:#7c3aed;color:#fff;border:none;font-size:11px;
+      font-weight:700;letter-spacing:.15em;cursor:pointer;display:none;
+    }
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+  </style>
+</head>
+<body>
+  <div class="auth-box">
+    <div class="glyph">⬡</div>
+    <div class="label" id="label">AUTHENTICATING</div>
+    <div class="error" id="error"></div>
+    <button class="retry" id="retry" onclick="location.href='/'">TRY AGAIN</button>
+  </div>
+  <script>
+    (function () {
+      var hash   = window.location.hash;
+      var search = window.location.search;
+
+      if (hash.includes('token=')) {
+        var token = new URLSearchParams(hash.slice(1)).get('token');
+        if (token) {
+          try {
+            sessionStorage.setItem('vault_os_session', JSON.stringify({ token: token, storedAt: Date.now() }));
+            window.location.replace('/');
+          } catch (e) {
+            document.getElementById('label').textContent = 'STORAGE ERROR';
+            document.getElementById('error').textContent = 'Could not save session. Check browser settings.';
+            document.getElementById('error').style.display = 'block';
+            document.getElementById('retry').style.display = 'inline-block';
+          }
+        } else {
+          showError('No token received.');
+        }
+      } else if (search.includes('error=') || hash.includes('error=')) {
+        var err = new URLSearchParams(search).get('error') || new URLSearchParams(hash.slice(1)).get('error');
+        showError('Login failed: ' + (err || 'unknown error'));
+      } else {
+        // No token, no error — redirect home
+        window.location.replace('/');
+      }
+
+      function showError(msg) {
+        document.getElementById('label').textContent = 'AUTHENTICATION FAILED';
+        document.getElementById('error').textContent = msg;
+        document.getElementById('error').style.display = 'block';
+        document.getElementById('retry').style.display = 'inline-block';
+      }
+    })();
+  </script>
+</body>
+</html>
