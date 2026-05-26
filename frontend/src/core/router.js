@@ -8,12 +8,9 @@ export function registerRoute(name, loader) {
 }
 
 export async function navigate(module) {
-  if (!canAccess(module)) {
-    await navigate('lockscreen');
-    return;
-  }
+  if (!canAccess(module)) { await navigate('lockscreen'); return; }
   const loader = _routes.get(module);
-  if (!loader) { console.error(`[Router] Unknown: ${module}`); return; }
+  if (!loader) { console.error(`[Router] Unknown module: ${module}`); return; }
   setState('activeModule', module);
   const mod = await loader();
   mod.mount?.();

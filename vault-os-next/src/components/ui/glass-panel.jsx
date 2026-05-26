@@ -1,3 +1,7 @@
-export function GlassPanel({ className = '', children }) {
-  return <section className={`glass-panel ${className}`.trim()}>{children}</section>;
+export function GlassPanel({ children, className = '', style = {}, ...props }) {
+  return (
+    <div className={`glass-panel ${className}`} style={style} {...props}>
+      {children}
+    </div>
+  );
 }

@@ -1,107 +1,87 @@
-# VAULT OS v2.0
+# VAULT OS v3.0
 
-Secure admin runtime. Discord OAuth. Cloudflare Pages + Render.
+Secure admin credential vault with Discord OAuth, modular JS frontend,
+Express API backend, and a Next.js 15 app layer.
 
----
+## Stack
+- **Frontend** — Vite + vanilla ESM, glassmorphism UI, particle canvas
+- **Backend**  — Express, Discord OAuth2, JWT, RBAC, audit log
+- **Next.js**  — vault-os-next/ for React app layer (optional)
+- **Deploy**   — Cloudflare Pages (frontend) + Render (backend)
 
-## REPO STRUCTURE
+## Quick Start
 
-```
-vault-os/
-├── frontend/   → Cloudflare Pages
-└── backend/    → Render (Node/Express)
-```
-
----
-
-## STEP 1 — DISCORD APP SETUP
-
-1. Go to https://discord.com/developers/applications
-2. Create a new application → **OAuth2** tab
-3. Add redirect URI:
-   ```
-   https://vault-os-api.onrender.com/auth/discord/callback
-   ```
-4. Copy **Client ID** and **Client Secret**
-5. Find your Discord User ID:
-   - Discord → Settings → Advanced → Developer Mode ON
-   - Right-click your username → Copy User ID
-
----
-
-## STEP 2 — BACKEND (Render)
-
-1. Push this repo to GitHub
-2. Go to https://render.com → New Web Service
-3. Connect repo → set **Root Directory** to `backend`
-4. Build command: `npm install`
-5. Start command: `npm start`
-6. Add environment variables:
-
-| Key | Value |
-|-----|-------|
-| `DISCORD_CLIENT_ID` | from Discord app |
-| `DISCORD_CLIENT_SECRET` | from Discord app |
-| `DISCORD_REDIRECT_URI` | `https://vault-os-api.onrender.com/auth/discord/callback` |
-| `FRONTEND_URL` | `https://vault-os.pages.dev` (update after CF deploy) |
-| `JWT_SECRET` | generate: `node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"` |
-| `ADMIN_DISCORD_IDS` | your Discord user ID |
-
-7. Deploy → note your Render URL (e.g. `https://vault-os-api.onrender.com`)
-
----
-
-## STEP 3 — FRONTEND (Cloudflare Pages)
-
-1. Go to https://pages.cloudflare.com → Create application → Connect to Git
-2. Select your repo
-3. Set **Root Directory** to `frontend`
-4. Build settings:
-   - Build command: `npm install && npm run build`
-   - Output directory: `dist`
-5. Add environment variable:
-
-| Key | Value |
-|-----|-------|
-| `VITE_API_URL` | your Render URL (e.g. `https://vault-os-api.onrender.com`) |
-
-6. Deploy
-7. Copy your Pages URL (e.g. `https://vault-os.pages.dev`)
-8. Go back to Render → update `FRONTEND_URL` env var to your Pages URL
-9. Go back to Discord Developer Portal → update redirect URI if needed
-
----
-
-## STEP 4 — CUSTOM DOMAIN (optional)
-
-Cloudflare Pages → Custom Domains → add your domain.
-DNS is already on Cloudflare — it auto-configures.
-
----
-
-## DEFAULT ACCESS
-
-- Navigate to your Pages URL
-- Click **AUTHENTICATE WITH DISCORD**
-- Your Discord ID in `ADMIN_DISCORD_IDS` → role = `admin`
-- Any other authenticated Discord user → role = `user`
-
----
-
-## LOCAL DEV
-
+### Backend (Render / local)
 ```bash
-# Backend
 cd backend
 cp .env.example .env   # fill in values
 npm install
 npm run dev            # http://localhost:3000
-
-# Frontend
-cd frontend
-cp .env.example .env   # VITE_API_URL=http://localhost:3000
-npm install
-npm run dev            # http://localhost:5173
 ```
 
-Add `http://localhost:3000/auth/discord/callback` to Discord OAuth2 redirects for local dev.
+### Frontend (Cloudflare Pages / local)
+```bash
+cd frontend
+cp .env.example .env.local   # set VITE_API_URL
+npm install
+npm run dev                  # http://localhost:5173
+```
+
+### Next.js layer
+```bash
+cd vault-os-next
+npm install
+npm run dev    # http://localhost:3001
+```
+
+## Environment Variables
+
+### Backend (.env)
+| Key | Description |
+|-----|-------------|
+| `DISCORD_CLIENT_ID` | Discord app client ID |
+| `DISCORD_CLIENT_SECRET` | Discord app client secret |
+| `DISCORD_REDIRECT_URI` | `https://your-api.onrender.com/auth/discord/callback` |
+| `JWT_SECRET` | Long random string |
+| `FRONTEND_URL` | `https://your-site.pages.dev` |
+| `ADMIN_DISCORD_IDS` | Comma-separated Discord user IDs |
+
+### Frontend (.env.local)
+| Key | Description |
+|-----|-------------|
+| `VITE_API_URL` | Your Render backend URL |
+
+## Discord App Setup
+1. Go to https://discord.com/developers/applications
+2. Create app → OAuth2 → add redirect: `https://your-api.onrender.com/auth/discord/callback`
+3. Copy Client ID + Secret into backend .env
+
+## Deploy
+- **Frontend** → push to GitHub → Cloudflare Pages auto-deploys
+- **Backend**  → connect GitHub to Render → uses `backend/render.yaml`
+
+## API Routes
+| Method | Path | Auth | Description |
+|--------|------|------|-------------|
+| GET | `/health` | — | Health check |
+| GET | `/auth/discord` | — | Start OAuth flow |
+| GET | `/auth/discord/callback` | — | OAuth callback |
+| GET | `/me` | user | Current user |
+| POST | `/logout` | user | End session |
+| GET | `/vault` | user | Get server vault |
+| POST | `/vault` | user | Sync local vault |
+| GET | `/rbac/permissions` | user | Own permissions |
+| GET | `/rbac/matrix` | admin | Full RBAC matrix |
+| GET | `/admin/stats` | admin | Server stats |
+| GET | `/admin/sessions` | admin | Active sessions |
+| DELETE | `/admin/sessions/:id` | admin | Terminate session |
+| GET | `/audit/events` | admin | Audit log |
+| GET | `/audit/export` | admin | Export audit JSON |
+
+## RBAC Roles
+| Role | Permissions |
+|------|-------------|
+| `user` | vault.read, vault.write |
+| `admin` | + audit.read, session.read |
+| `owner_visible` | + audit.export, session.force_terminate, rbac.write |
+| `owner_hidden` | same as owner_visible |

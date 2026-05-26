@@ -1,9 +1,10 @@
 const _state = {
-  user: null,
-  session: null,
-  theme: 'dark',
+  user:         null,
+  session:      null,
+  theme:        'dark',
   activeModule: null,
-  locked: true,
+  locked:       true,
+  permissions:  [],
 };
 
 const _listeners = new Map();
@@ -22,4 +23,8 @@ export function subscribe(key, fn) {
   if (!_listeners.has(key)) _listeners.set(key, new Set());
   _listeners.get(key).add(fn);
   return () => _listeners.get(key).delete(fn);
+}
+
+export function hasPermission(perm) {
+  return _state.permissions.includes(perm);
 }

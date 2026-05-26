@@ -1,14 +1,16 @@
+/* ── MOBILE OVERRIDES ── */
 @media (max-width: 640px) {
-  #viewport { padding: 16px; }
-  .vault-grid  { grid-template-columns: 1fr; }
-  .admin-grid  { grid-template-columns: 1fr; }
+  #viewport { padding: 14px; }
+  .vault-grid { grid-template-columns: 1fr; }
+  .admin-grid { grid-template-columns: 1fr; }
+  .vault-stat-grid { grid-template-columns: repeat(2,1fr); }
   .dash-toolbar { flex-direction: column; align-items: stretch; }
-  .lock-core { padding: 32px 20px; }
+  .lock-core { padding: 32px 22px; }
   .modal { padding: 20px; }
-  .admin-stat { font-size: 20px; }
 }
 
 @media (max-width: 380px) {
   .topbar-brand { font-size: 9px; }
-  #topbar-user { display: none; }
+  #topbar-user  { display: none; }
+  .vault-stat-grid { grid-template-columns: repeat(2,1fr); }
 }
