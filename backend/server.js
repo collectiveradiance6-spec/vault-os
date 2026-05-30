@@ -100,43 +100,21 @@ app.get('/auth/discord', (_req, res) => {
 });
 
 app.get('/auth/discord/callback', async (req, res) => {
+  const { code } = req.query;
+  if (!code) return res.redirect(`${FRONTEND_URL}?error=no_code`);
+
   try {
-    // 1. get discord user from your OAuth logic
-    const discordUser = req.user || req.discordUser;
-
-    if (!discordUser) {
-      return res.status(401).json({ error: "No Discord user found" });
-    }
-
-    // 2. build minimal user object
-    const user = {
-      id: discordUser.id,
-      username: discordUser.username
-    };
-
-    // 3. sign JWT
-    const token = signToken(user);
-
-    // 4. set cookie
-    res.setHeader(
-      "Set-Cookie",
-      cookie.serialize("vault_token", token, {
-        httpOnly: true,
-        secure: true,
-        sameSite: "lax",
-        path: "/",
-        maxAge: 60 * 60 * 24 * 7
-      })
-    );
-
-    // 5. redirect to frontend
-    return res.redirect(process.env.FRONTEND_URL);
-
-  } catch (err) {
-    console.error(err);
-    return res.status(500).json({ error: "OAuth callback failed" });
-  }
-});
+    const tokenRes = await fetch('https://discord.com/api/oauth2/token', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        client_id:     DISCORD_CLIENT_ID,
+        client_secret: DISCORD_CLIENT_SECRET,
+        grant_type:    'authorization_code',
+        code,
+        redirect_uri:  DISCORD_REDIRECT_URI,
+      }),
+    });
     if (!tokenRes.ok) throw new Error(`Token exchange: ${tokenRes.status}`);
     const tokenData = await tokenRes.json();
 
@@ -162,13 +140,19 @@ app.get('/auth/discord/callback', async (req, res) => {
     sessions.set(token, { userId: d.id, role, issuedAt: Date.now() });
     addAudit(d.id, d.username, 'login', { role, ip: req.ip });
 
-    res.redirect(`${FRONTEND_URL}/auth#token=${token}`);
+    res.setHeader("Set-Cookie", cookie.serialize("vault_token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "lax",
+      path: "/",
+      maxAge: 60 * 60 * 24 * 7
+    }));
+    return res.redirect(process.env.FRONTEND_URL);
   } catch (err) {
-    console.error('[OAuth]', err.message);
-    res.redirect(`${FRONTEND_URL}?error=auth_failed`);
+    console.error('[OAuth Error]', err.message || err);
+    return res.redirect(`${FRONTEND_URL}?error=oauth_failure`);
   }
 });
-
 
 // ─── AUTH ROUTES ──────────────────────────────────────────────────────────────
 app.get('/me', requireAuth, (req, res) => {
