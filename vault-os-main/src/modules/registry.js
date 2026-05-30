@@ -1,4 +1,4 @@
-import { emit } from '@core/eventBus.js';
+import { emit } from '../core/eventBus.js';
 
 const modules = new Map();
 
