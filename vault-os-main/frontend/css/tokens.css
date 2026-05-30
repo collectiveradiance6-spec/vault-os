@@ -1,0 +1,61 @@
+/* ── VAULT OS DESIGN TOKENS ── */
+:root {
+  /* Background layers */
+  --bg-void:    #02030a;
+  --bg-base:    #05060f;
+  --bg-surface: #0a0b18;
+  --bg-raised:  #0f1022;
+  --bg-glass:   rgba(255,255,255,0.055);
+  --bg-glass2:  rgba(255,255,255,0.09);
+
+  /* Accent system */
+  --accent:        #7c3aed;
+  --accent-bright: #9d5cf6;
+  --accent-glow:   rgba(124,58,237,0.35);
+  --accent-dim:    rgba(124,58,237,0.12);
+  --accent2:       #ff6fae;
+  --accent3:       #4df0c8;
+
+  /* Text */
+  --text-primary:   #eaf0ff;
+  --text-secondary: #7a8499;
+  --text-muted:     #4a5568;
+  --text-accent:    #c4b4ff;
+
+  /* Semantic */
+  --danger:     #ff4f6a;
+  --danger-dim: rgba(255,79,106,0.12);
+  --success:    #3dffa0;
+  --warn:       #ffbe3d;
+
+  /* Borders */
+  --border:        rgba(255,255,255,0.07);
+  --border2:       rgba(255,255,255,0.14);
+  --border-accent: rgba(124,58,237,0.4);
+
+  /* Shape */
+  --radius:    10px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+
+  /* Typography */
+  --sans: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  /* Reactive bg (set by fluid-bg.js) */
+  --px: 0px;
+  --py: 0px;
+
+  /* Viewport fix (set by boot) */
+  --vh: 1vh;
+}
+
+/* Theme overrides */
+[data-theme="dim"] {
+  --bg-void: #0a0a12; --bg-base: #0e0e1a; --bg-surface: #141424;
+  --accent: #6d28d9;
+}
+[data-theme="abyss"] {
+  --bg-void: #000; --bg-base: #030303; --bg-surface: #070707;
+  --accent: #5b21b6; --text-primary: #c4b5fd;
+}

@@ -1,0 +1,12 @@
+@media (max-width: 640px) {
+  .home { grid-template-columns: 1fr; }
+  .vault-stat-grid { grid-template-columns: repeat(2, 1fr); }
+  .lock-box { width: calc(100% - 32px); }
+  .panel-actions { flex-wrap: wrap; }
+  .panel-btn { flex: 1 1 calc(50% - 4px); }
+}
+
+@media (max-width: 380px) {
+  .statusbar { padding: 0 10px; }
+  .status-left span:not(:first-child):not(:nth-child(2)) { display: none; }
+}

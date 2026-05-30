@@ -1,0 +1,13 @@
+:root{
+  --bg1:#05060a;
+  --accent1:#7c5cff;
+  --glass:rgba(255,255,255,.05);
+}
+
+.theme-red{
+  --accent1:#ff3d71;
+}
+
+.theme-blue{
+  --accent1:#4da3ff;
+}

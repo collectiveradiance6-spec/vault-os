@@ -1,0 +1,8 @@
+{
+  "/_not-found/page": "/_not-found",
+  "/api/audit/events/route": "/api/audit/events",
+  "/api/auth/login/route": "/api/auth/login",
+  "/(core)/command/page": "/command",
+  "/(auth)/login/page": "/login",
+  "/page": "/"
+}

@@ -1,0 +1,33 @@
+#bgCanvas {
+  position: fixed; inset: 0; z-index: -5;
+  opacity: .55; pointer-events: none;
+}
+
+.energy {
+  position: fixed; inset: -40%;
+  background:
+    radial-gradient(ellipse at calc(22% + var(--px)*.4) calc(28% + var(--py)*.4),
+      rgba(124,92,255,.38), transparent 44%),
+    radial-gradient(ellipse at calc(78% - var(--px)*.3) calc(72% - var(--py)*.3),
+      rgba(255,111,174,.28), transparent 48%),
+    radial-gradient(ellipse at 50% 50%, rgba(77,240,200,.12), transparent 60%);
+  filter: blur(90px);
+  z-index: -3;
+  animation: drift 18s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+.scanlines {
+  position: fixed; inset: 0; z-index: -2; pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg, transparent, transparent 2px,
+    rgba(0,0,0,.07) 2px, rgba(0,0,0,.07) 4px
+  );
+  opacity: .5;
+  transition: opacity .3s;
+}
+
+.vignette {
+  position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background: radial-gradient(ellipse at 50% 50%, transparent 50%, rgba(0,0,0,.72) 100%);
+}

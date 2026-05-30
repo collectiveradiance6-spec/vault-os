@@ -1,0 +1,67 @@
+/* ── Auth lockscreen (Discord OAuth) ── */
+#lockScreen {
+  position: fixed; inset: 0; z-index: 9999;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  background: radial-gradient(circle at 50% 40%, rgba(124,92,255,.2), rgba(0,0,0,.96));
+  transition: opacity .6s ease, transform .6s ease;
+}
+#lockScreen.fade-out {
+  opacity: 0; transform: scale(1.04); pointer-events: none;
+}
+
+.lock-logo {
+  font-size: 11px; font-weight: 600; letter-spacing: .25em;
+  color: var(--muted); text-transform: uppercase; margin-bottom: 28px;
+}
+
+.lock-box {
+  width: 320px; padding: 28px 24px;
+  border-radius: 28px;
+  background: rgba(10,12,28,.78);
+  border: 1px solid var(--stroke2);
+  backdrop-filter: blur(40px);
+  box-shadow: 0 0 100px rgba(124,92,255,.22), 0 30px 80px rgba(0,0,0,.6);
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  animation: fadeUp .4s ease both;
+}
+
+.lock-glyph {
+  font-size: 44px; line-height: 1;
+  margin-bottom: 12px;
+  filter: drop-shadow(0 0 16px rgba(124,92,255,.6));
+  animation: pulse 3s ease-in-out infinite;
+}
+
+.lock-title {
+  font-size: 18px; font-weight: 700; letter-spacing: .3em;
+  color: var(--text); margin-bottom: 4px;
+}
+
+.lock-sub {
+  font-size: 9px; letter-spacing: .18em;
+  color: var(--muted); text-align: center; margin-bottom: 20px;
+}
+
+/* Discord auth button */
+.discord-btn {
+  display: flex; align-items: center; gap: 10px; justify-content: center;
+  width: 100%; padding: 13px 20px;
+  border-radius: 14px;
+  background: #5865F2;
+  border: none; color: #fff;
+  font-size: 12px; font-weight: 700; letter-spacing: .12em;
+  transition: background .2s, box-shadow .2s, transform .12s;
+  box-shadow: 0 4px 24px rgba(88,101,242,.35);
+}
+.discord-btn:hover {
+  background: #4752c4;
+  box-shadow: 0 6px 32px rgba(88,101,242,.55);
+  transform: translateY(-1px);
+}
+.discord-btn:active { transform: scale(.96); }
+
+.lock-fine {
+  font-size: 10px; color: var(--muted);
+  letter-spacing: .08em; text-align: center; margin-top: 12px;
+}
