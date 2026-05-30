@@ -4,6 +4,7 @@ import {
   getFilteredEntries,
   getCategories,
   getEntries,
+  getStats,
 }                               from '../../services/vault.js';
 import { openPanel }            from '../../ui/panel.js';
 import { openAddModal, openEditModal } from '../../ui/modal.js';
@@ -13,13 +14,33 @@ let activeFilter = 'All';
 let searchQ      = '';
 
 export function mount() {
-  const user = getState('user');
+  const user  = getState('user');
+  const stats = getStats();
 
   getViewport().innerHTML = `
     <div id="dashboard">
       <div class="dash-header">
         <h2 class="dash-title">VAULT DASHBOARD</h2>
         <span class="dash-meta">${user?.username?.toUpperCase() ?? ''} · ${new Date().toLocaleDateString()}</span>
+      </div>
+
+      <div class="vault-stat-grid" id="dash-stats">
+        <div class="vault-stat">
+          <div class="vault-stat-num" style="color:var(--text-accent)">${stats.total}</div>
+          <div class="vault-stat-label">Total</div>
+        </div>
+        <div class="vault-stat">
+          <div class="vault-stat-num" style="color:var(--success)">${stats.active}</div>
+          <div class="vault-stat-label">Active</div>
+        </div>
+        <div class="vault-stat">
+          <div class="vault-stat-num" style="color:var(--warn)">${stats.pinned}</div>
+          <div class="vault-stat-label">Pinned</div>
+        </div>
+        <div class="vault-stat">
+          <div class="vault-stat-num" style="color:var(--danger)">${stats.pending}</div>
+          <div class="vault-stat-label">Pending</div>
+        </div>
       </div>
 
       <div class="dash-toolbar">
@@ -48,8 +69,20 @@ export function mount() {
   });
 }
 
-// Called by panel after delete
-export function refreshGrid() { buildFilters(); renderGrid(); }
+// Called by panel/modal after add/edit/delete
+export function refreshGrid() {
+  const s = getStats();
+  const sg = document.getElementById('dash-stats');
+  if (sg) {
+    const nums = sg.querySelectorAll('.vault-stat-num');
+    if (nums[0]) nums[0].textContent = s.total;
+    if (nums[1]) nums[1].textContent = s.active;
+    if (nums[2]) nums[2].textContent = s.pinned;
+    if (nums[3]) nums[3].textContent = s.pending;
+  }
+  buildFilters();
+  renderGrid();
+}
 
 // ── Filters ───────────────────────────────────────────────────────────────────
 function buildFilters() {
