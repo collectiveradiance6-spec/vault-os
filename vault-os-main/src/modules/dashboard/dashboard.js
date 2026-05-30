@@ -1,31 +1,27 @@
-import { getState } from '@core/state.js';
-import { on } from '@core/eventBus.js';
-import { filterCards } from '@ui/search.js';
+import { getState } from '../../core/state.js';
+import { on } from '../../core/eventBus.js';
+import { filterCards } from '../../ui/search.js';
 
 export function renderDashboard(root) {
   const { entries } = getState();
   root.innerHTML = `
     <section class="home credential-grid" id="vaultGrid">
-      ${entries
-        .map(
-          (e) => `
+      ${entries.map(e => `
         <article class="card glass" data-id="${e.id}">
           <div class="card-icon">${e.icon ?? '🔒'}</div>
-          <h3>${escapeHtml(e.name)}</h3>
-          <p class="card-meta">${escapeHtml(e.category ?? '')}</p>
+          <h3>${escapeHtml(e.t)}</h3>
+          <p class="card-meta">${escapeHtml(e.cat ?? '')}</p>
         </article>
-      `,
-        )
-        .join('')}
+      `).join('')}
     </section>
   `;
-
   filterCards();
 }
 
 export function bootDashboard() {
   on('state:change', () => {
-    if (!getState().locked && getState().activeModule === 'dashboard') {
+    const s = getState();
+    if (!s.locked && s.activeModule === 'dashboard') {
       const root = document.getElementById('moduleRoot');
       if (root) renderDashboard(root);
     }
